@@ -12,7 +12,9 @@ public class EmployeePayroll {
 
 
         System.out.println(" Press 1 to Add Data");
-        System.out.println("Press 2 to Retrive data");
+        System.out.println(" Press 2 to Retrive data");
+        System.out.println(" Press 3 to Update Data");
+        System.out.println(" Press 4 to Perticular ");
         int choice = s.nextInt();
 
         switch (choice) {
@@ -22,11 +24,38 @@ public class EmployeePayroll {
             case 2:
                 ReteriveData();
                 break;
+            case 3:
+                UpdateData();
+                break;
+            case 4:
+                ReteriveDataForParticularDate();
+                break;
 
         }
 
 
     }
+
+    private static void ReteriveDataForParticularDate() throws SQLException {
+        EmployeeRepo repo = new EmployeeRepo();
+        List<Information> infos = repo.findAllForParticularDate();
+        infos.forEach(System.out::println);
+    }
+
+    private static void UpdateData() throws SQLException {
+
+
+            System.out.println("Enter Id");
+            int id = s.nextInt();
+
+            System.out.println("Enter BasicPay");
+            int basicPay = s.nextInt();
+
+            EmployeeRepo repo = new EmployeeRepo();
+            repo.updatedata(id, basicPay);
+
+        }
+
 
     private static void ReteriveData() throws SQLException {
         EmployeeRepo repo = new EmployeeRepo();

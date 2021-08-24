@@ -94,6 +94,92 @@ public class EmployeeRepo {
         }
         return infos;
     }
+
+    public void updatedata(int id, int basicPay) throws SQLException {
+        Connection connection = null;
+        PreparedStatement prepstate = null;
+        try {
+            // Step1: Load & Register Driver Class
+            DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+
+            // Step2: Establish a MySql Connection
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306?user= root & password = 121993");
+
+            // Step3: Create Statement
+            String query = "Update payroll_service.employee_payroll set basicPay=? where Id=?";
+            prepstate = connection.prepareStatement(query);
+            prepstate.setFloat(1, basicPay);
+            prepstate.setInt(2, id);
+
+            // Step4: Execute Query
+            prepstate.executeUpdate();
+            System.out.print("Records Updated!");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (connection != null) {
+                connection.close();
+            }
+            if (prepstate != null) {
+                prepstate.close();
+            }
+        }
+    }
+
+
+    public List<Information> findAllForParticularDate() throws SQLException {
+
+        List<Information> infos=new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement prepstatement = null;
+        try {
+            DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver ());
+
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306?user= root & password = 121993");
+
+            String query ="Select * from payroll_service.employee_payroll  ";
+            prepstatement = connection.prepareStatement(query);
+
+            ResultSet resultset = prepstatement.executeQuery();
+
+            while(resultset.next()) {
+                Information information = new Information();
+
+                int id=resultset.getInt(1);
+                information.setId(id);
+
+                String name = resultset.getString(2);
+                information.setName(name);
+
+                String dept = resultset.getString(3);
+                information.setDepartment(dept);
+
+                String gender = resultset.getString(4);
+                information.setGender(gender);
+
+                int pay = resultset.getInt(5);
+                information.setBasicPay(pay);
+
+                infos.add(information);
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            if(connection != null) {
+                connection.close();
+            }
+            if(prepstatement != null) {
+                prepstatement.close();
+            }
+        }
+        return infos;
+
+    }
 }
 
 
