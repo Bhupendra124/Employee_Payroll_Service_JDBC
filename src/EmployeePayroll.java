@@ -1,4 +1,5 @@
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Scanner;
 
 public class EmployeePayroll {
@@ -11,11 +12,15 @@ public class EmployeePayroll {
 
 
         System.out.println(" Press 1 to Add Data");
+        System.out.println("Press 2 to Retrive data");
         int choice = s.nextInt();
 
         switch (choice) {
             case 1:
                 AddData();
+                break;
+            case 2:
+                ReteriveData();
                 break;
 
         }
@@ -23,7 +28,14 @@ public class EmployeePayroll {
 
     }
 
-        private static void AddData() throws ClassNotFoundException, SQLException {
+    private static void ReteriveData() throws SQLException {
+        EmployeeRepo repo = new EmployeeRepo();
+        System.out.println("Enter Name");
+        String Name = s.next();
+        List<Information> infos = repo.findAll(Name);
+        infos.forEach(System.out::println);
+    }
+    private static void AddData() throws ClassNotFoundException, SQLException {
             Information info = new Information();
 
             System.out.println("Enter Name");
