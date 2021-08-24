@@ -5,6 +5,14 @@ public class Information {
         public String gender;
         public double basicPay;
 
+    public Information(int id, String name, String department, String gender, double basicPay) {
+        Id = id;
+        Name = name;
+        this.department = department;
+        this.gender = gender;
+        this.basicPay = basicPay;
+    }
+
     public int getId() {
         return Id;
     }
